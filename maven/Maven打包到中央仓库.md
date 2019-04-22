@@ -172,7 +172,12 @@ mvn clean deploy
 当你点击了`Release`按钮后，成功后会将你的那条记录删除  
 然后你需要去你提交的`issue`那里回复已经发布了，管理员会帮你激活同步过程并关闭issue  
 
-然后需要等两三个小时就能在`https://search.maven.org`搜索到你的jar了
+然后需要等两三个小时就能在`https://search.maven.org`搜索到你的jar了  
+![image](https://raw.githubusercontent.com/jclww/doc/master/img/maven_search.png)   
 
 ### 其他
 这只是第一次使用你的groupid发布构件，第一次成功之后，以后就可以使用你的groupid发布任何的构件了，只需要你的groupid没有变就行。不需要麻烦的提交`issue`
+
+### link
+参考构建流程:https://my.oschina.net/songxinqiang/blog/313226  
+gpg无法弹框:https://www.jianshu.com/p/2ed292ae2365
