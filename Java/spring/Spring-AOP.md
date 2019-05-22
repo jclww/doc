@@ -79,6 +79,66 @@ Async构建切面 & 切入点
 
 ```
 
+### 线程池初始化
+TaskExecutionAutoConfiguration#taskExecutorBuilder  
+
+所以以后可以不自己创建线程池了，使用生成的就好了
+```
+    @Resource
+    private AsyncTaskExecutor asyncTaskExecutor;
+```
+具体代码
+```
+TaskExecutionAutoConfiguration#taskExecutorBuilder
+
+	@Bean
+	@ConditionalOnMissingBean
+	public TaskExecutorBuilder taskExecutorBuilder() {
+		TaskExecutionProperties.Pool pool = this.properties.getPool();
+		TaskExecutorBuilder builder = new TaskExecutorBuilder();
+		builder = builder.queueCapacity(pool.getQueueCapacity());
+		builder = builder.corePoolSize(pool.getCoreSize());
+		builder = builder.maxPoolSize(pool.getMaxSize());
+		builder = builder.allowCoreThreadTimeOut(pool.isAllowCoreThreadTimeout());
+		builder = builder.keepAlive(pool.getKeepAlive());
+		builder = builder.threadNamePrefix(this.properties.getThreadNamePrefix());
+		builder = builder.customizers(this.taskExecutorCustomizers);
+		builder = builder.taskDecorator(this.taskDecorator.getIfUnique());
+		return builder;
+	}
+
+	@Lazy
+	@Bean(name = APPLICATION_TASK_EXECUTOR_BEAN_NAME)
+	@ConditionalOnMissingBean(Executor.class)
+	public ThreadPoolTaskExecutor applicationTaskExecutor(TaskExecutorBuilder builder) {
+		return builder.build();
+	}
+
+AsyncAnnotationAdvisor#buildAdvice
+	protected Advice buildAdvice(
+			@Nullable Supplier<Executor> executor, @Nullable Supplier<AsyncUncaughtExceptionHandler> exceptionHandler) {
+
+		AnnotationAsyncExecutionInterceptor interceptor = new AnnotationAsyncExecutionInterceptor(null);
+		interceptor.configure(executor, exceptionHandler);
+		return interceptor;
+	}
+
+AsyncExecutionAspectSupport#configure
+
+	public void configure(@Nullable Supplier<Executor> defaultExecutor,
+			@Nullable Supplier<AsyncUncaughtExceptionHandler> exceptionHandler) {
+
+		this.defaultExecutor = new SingletonSupplier<>(defaultExecutor, () -> getDefaultExecutor(this.beanFactory));
+		this.exceptionHandler = new SingletonSupplier<>(exceptionHandler, SimpleAsyncUncaughtExceptionHandler::new);
+	}
+
+AsyncExecutionAspectSupport#getDefaultExecutor
+{
+    return beanFactory.getBean(TaskExecutor.class);
+}
+```
+
+
 ### note
 默认异步切面是最先执行的
 
