@@ -65,6 +65,7 @@ Async构建切面 & 切入点
 					return ((Future<?>) result).get();
 				}
 			}
+			// 可以自定义处理异常 exceptionHandler AsyncUncaughtExceptionHandler 默认是打异常日志 AsyncUncaughtExceptionHandler
 			catch (ExecutionException ex) {
 				handleError(ex.getCause(), userDeclaredMethod, invocation.getArguments());
 			}
