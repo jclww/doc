@@ -46,3 +46,27 @@ revert 不会丢弃提交 只会新建一个提交记录
 git commit -m''
 git push
 ```
+
+### 设置邮箱 & 用户名
+
+设置单个仓库的配置
+```
+git config user.name "xxx"
+
+git config user.email "xxx@xx.com"
+```
+
+设置全局仓库的配置
+```
+git config --global user.name "xxx"
+
+git config --global user.email "xxx@xx.com"
+```
+
+### 重置提交的用户名&邮箱
+
+修改当前的提交人和邮箱
+```
+git commit --amend --author="xxx <xxx@xx.com>"
+```
+
