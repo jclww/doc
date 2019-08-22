@@ -10,6 +10,10 @@ $ git config -e [--global]
 # 设置提交代码时的用户信息
 $ git config [--global] user.name "[name]"
 $ git config [--global] user.email "[email address]"
+
+# 设置git分页器
+git config --global core.pager "less -FRSX"
+
 ```
 ### 分支管理
 ```

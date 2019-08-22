@@ -34,11 +34,20 @@ dubbo协议缺省为hessian2，rmi协议缺省为java，http协议缺省为json
 
 ### Dubbo 负载均衡
 dubbo负载均衡策略有4中，处于`dubbo-rpc`包中
-
 > package com.alibaba.dubbo.rpc.cluster.loadbalance
-#### RandomLoadBalance 随机
-根据权重随机获取
 
+#### RandomLoadBalance 随机 (默认)
+根据权重随机获取
+```
+// 指定默认为 RandomLoadBalance
+@SPI(RandomLoadBalance.NAME)
+public interface LoadBalance {
+}
+
+配置在文件META-INF/dubbo/internal/com.alibaba.dubbo.rpc.cluster.LoadBalance
+
+random=com.alibaba.dubbo.rpc.cluster.loadbalance.RandomLoadBalance
+```
 #### RoundRobinLoadBalance 轮询
 根据设置的权重轮询获取
 
@@ -52,8 +61,21 @@ dubbo负载均衡策略有4中，处于`dubbo-rpc`包中
 dubbo调用容错机制(当远程服务调用的策略)，处于`dubbo-rpc`包中
 > package com.alibaba.dubbo.rpc.cluster.support
 
-#### FailoverCluster
+#### FailoverCluster (默认)
+
 > 失败转移，当出现失败，重试其它服务器，通常用于读操作，但重试会带来更长延迟。
+
+```
+// 指定默认为FailoverCluster
+@SPI(FailoverCluster.NAME)
+public interface Cluster {
+}
+
+配置在文件META-INF/dubbo/internal/com.alibaba.dubbo.rpc.cluster.Cluster
+
+failover=com.alibaba.dubbo.rpc.cluster.support.FailoverCluster
+```
+
 #### FailfastCluster
 > 快速失败，只发起一次调用，失败立即报错，通常用于非幂等性的写操作。
 #### FailsafeCluster
