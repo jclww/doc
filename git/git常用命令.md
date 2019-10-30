@@ -74,3 +74,13 @@ git config --global user.email "xxx@xx.com"
 git commit --amend --author="xxx <xxx@xx.com>"
 ```
 
+### 修改远程仓库地址
+
+```
+git remote set-url origin [url]
+```
+
+```
+git remote rm origin
+git remote add origin [url]
+```

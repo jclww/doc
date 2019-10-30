@@ -36,7 +36,7 @@ vim https.conf
 server {
     charset utf-8;
     listen 443 ssl;  # 1.1版本后这样写
-    server_name www.domain.com; #填写绑定证书的域名
+    server_name www.domain.cn; #填写绑定证书的域名
     ssl_certificate /opt/tengine/ssl/1_www.domain.cn_bundle.crt;  # 指定证书的位置，绝对路径
     ssl_certificate_key /opt/tengine/ssl/2_www.domain.cn.key;  # 绝对路径，同上
     ssl_session_timeout 5m;
