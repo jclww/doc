@@ -88,6 +88,12 @@ BOOT-INF/lib/api-1.0.0.jar
 BOOT-INF/lib/spring-core-5.1.2.RELEASE.jar
 ...
 ```
+> 其他方法:
+>>1. 直接解压jar包看先后顺序  
+>>2. 还有查看解压后文件的inode号 `ls -il`
+>>> 6400809 -rw-r--r--  1 xxx  staff     2475 Nov 20 17:08 api-1.0.0.jar
+
+
 所以会先加载`api-1.0.0.jar`内自己定义的`StringUtils`
 
 
